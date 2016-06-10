@@ -1,0 +1,4 @@
+---
+app_name: nginx
+servername: localhost
+user: vagrant

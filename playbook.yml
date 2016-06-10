@@ -1,0 +1,9 @@
+---
+- name: Craft Beer App Local Machine
+  hosts: all
+  roles:
+  # - packages
+  - nginx
+  sudo: true
+  vars_files:
+    - "vars/local.yml"

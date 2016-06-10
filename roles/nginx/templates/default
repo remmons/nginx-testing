@@ -1,0 +1,30 @@
+ssl_protocols  TLSv1 TLSv1.1 TLSv1.2;  # don’t use SSLv3 ref: POODLE
+
+server {
+    listen 80;
+    # server_name may not be necessary? Dunno, since performance is not an issue
+    # for my port 80 forwarding I never bothered to find out
+    server_name  ~.*;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+  listen 443;
+  ssl on;
+  ssl_certificate /etc/ssl/certs/server.crt;
+  ssl_certificate_key /etc/ssl/private/server.key;
+
+  charset UTF-8;
+
+  server_name {{ servername }};
+
+  location / {
+    return 200 '<b>hello secure world</b>';
+    add_header Content-Type text/html;
+    if ($http_x_forwarded_proto != 'https') {
+      rewrite ^ https://$host$request_uri? permanent;
+    }
+  }
+
+}
