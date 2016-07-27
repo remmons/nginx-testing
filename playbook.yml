@@ -1,5 +1,5 @@
 ---
-- name: Craft Beer App Local Machine
+- name: Test Local Machine
   hosts: all
   roles:
   - packages
